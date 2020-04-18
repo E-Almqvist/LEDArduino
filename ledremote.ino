@@ -1,16 +1,32 @@
-#define STATUS_PIN 13
+#include <FastLED.h>
 
-#define dw digitalWrite
+
+// Hardware vars
+#define CHIPSET WS2812
+#define COLOR_ORDER GRB
+#define NUM_LEDS 300
+#define DATA_PIN 2
+
+// Vars
+CRGB leds[NUM_LEDS];
+
+// Config
+#define BRIGHTNESS 20
 
 
 void setup() {
-	pinMode( STATUS_PIN, HIGH );
-	Serial.begin( 9600 );
+	FastLED.addLeds<CHIPSET, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+
+	for( int i=0; i < NUM_LEDS; i++ ) {
+		leds[i] = CRGB( 0, 255, 0 );
+	}	
+	
 }
 
 void loop() {
-	dw( STATUS_PIN, HIGH );
-	delay(1000);
-	dw( STATUS_PIN, LOW );
-	delay(1000);
+	//leds[0] = CRGB(255, 0, 0);
+	//leds[3] = CRGB( 255, 255, 0 );
+
+	FastLED.setBrightness(BRIGHTNESS);
+	FastLED.show();
 }
